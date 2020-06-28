@@ -6,9 +6,7 @@ use Data::Dumper qw(Dumper);
 my @input_board = (' ',' ',' ',' ',' ',' ',' ',' ',' ');
 
 sub check_win {
-
   my @board = @_;
-
   my @win_states = (
     [0,1,2],
     [0,3,6],
@@ -18,7 +16,6 @@ sub check_win {
     [2,4,6],
     [1,4,7],
     [3,4,5]);
-
   foreach ('X','O') {
     my $player = $_;
     foreach (@win_states){
@@ -28,7 +25,6 @@ sub check_win {
       my $first_val = $board[$first];
       my $second_val = $board[$second];
       my $third_val = $board[$third];
-
       if ($first_val eq $second_val and $first_val eq $third_val){
         if ($first_val eq ' ') {
           return 0;
