@@ -26,7 +26,8 @@ print "
 		need to  point the default [localhost or domain] host in Apache
 		at the github repository files.</p>
 		<p>You may also need to check with <pre>sestatus</pre> to see
-		if you need to modify SELinux permissions for httpd with this fix:
+		if you need to modify SELinux permissions for httpd with this fix
+		if SELinux is enabled:
 		<pre>semanage fcontext -a -t httpd_sys_script_exec_t \"/var/www/html/cgi-test(/.*)?\"</pre>
 		and update the rules with this
 		<pre>restorecon -R -v /var/www/html/cgi-test</pre>
