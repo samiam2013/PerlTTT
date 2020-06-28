@@ -40,4 +40,4 @@ sub check_win {
   }
 }
 
-print check_win(@input_board)." winner! \n";
+print check_win(@input_board)." wins! \n";
