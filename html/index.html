@@ -1,10 +1,64 @@
 <html>
 <head>
-	301 moved
+	<title>Tic Tac Toe</title>
 </head>
 	<body>
+	<style>
+		#page_title{
+			text-align: center;
+			padding-top: 20px;
+		}
+		#board {
+			margin: auto;
+			width: 205px;
+			text-align: center;
+			font-size: 11px;
+		}
+		.board_space {
+			height: 50px;
+			width: 65px;
+		}
+		.board_row{
+			padding-top: 5px;
+		}
+	</style>
 	<script>
-		window.location.replace("/cgi-bin/index.pl");
+		//this will have to be the code for letting the agent move
+		function boardMove(space_number){
+			var space_id = "space_"+space_number;
+			var button = document.getElementById(space_id);
+			button.innerText = 'X';
+		}
 	</script>
+	<h3 id="page_title">Tic Tac Toe</h3>
+	<div id="board">
+		<div class="board_row">
+			<button class="board_space" id="space_0" onclick="boardMove(0)">
+			_</button>
+			<button class="board_space" id="space_1" onclick="boardMove(1)">
+			_</button>
+			<button class="board_space" id="space_2" onclick="boardMove(2)">
+			_</button>
+		</div>
+		<div class="board_row">
+			<button class="board_space" id="space_3" onclick="boardMove(3)">
+			_</button>
+			<button class="board_space" id="space_4" onclick="boardMove(4)">
+			_</button>
+			<button class="board_space" id="space_5" onclick="boardMove(5)">
+			_</button>
+		</div>
+		<div class="board_row">
+			<button class="board_space" id="space_6" onclick="boardMove(6)">
+			_</button>
+			<button class="board_space" id="space_7" onclick="boardMove(7)">
+			_</button>
+			<button class="board_space" id="space_8" onclick="boardMove(8)">
+			_</button>
+		</div>
+		<br />
+		You make the first move as player X, the API will respond
+	</div>
+
 	</body>
 </html>
