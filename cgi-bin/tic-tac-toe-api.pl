@@ -92,7 +92,7 @@ sub find_best_move {
 
       }
     }
-    print "best move: ".$best_move."\n";
+    #print "best move: ".$best_move."\n";
     return $best_move;
   }
 }
@@ -156,10 +156,13 @@ my @response = ("unknown",-1);
 if ($score == -10){ #no winner yet
   #print "winner: X";
   $response[0] = "winner X";
+}if ($score == 10){ #no winner yet
+  #print "winner: X";
+  $response[0] = "winner O";
 } elsif ($score == 0){
   if (move_left($input_board)) {
     # find next move
-    print "computing next move! ......\n";
+    #print "computing next move! ......\n";
     my $next_move = find_best_move($input_board);
     $response[0] = "continue";
     $response[1] = $next_move;

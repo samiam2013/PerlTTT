@@ -29,8 +29,10 @@
 		function boardMove(space_number){
 			var space_id = "space_"+space_number;
 			var button = document.getElementById(space_id);
-			button.innerText = 'X';
-			requestBuild();
+			if(button.innerText == "_"){
+				button.innerText = 'X';
+				requestBuild();
+			}
 		}
 
 		function requestBuild(){
@@ -48,12 +50,30 @@
 			var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
 			xmlhttp.open("POST", "/cgi-bin/tic-tac-toe-api.pl");
 			xmlhttp.onreadystatechange = function() {
-	        if (xmlhttp.status==200) {
-						console.log(xmlhttp.responseText);
+	        if (this.readyState == 4 && xmlhttp.status==200) {
+						setResponse(xmlhttp.responseText);
 					}
 	    };
 			xmlhttp.setRequestHeader("Content-Type", "application/json");
 			xmlhttp.send(JSON.stringify(moves));
+		}
+
+		function setResponse(moveJSON){
+			console.log('the json response: '+moveJSON);
+			if (moveJSON != ''){
+				move = JSON.parse(moveJSON);
+				moveType = move[0];
+				if (moveType == 'continue'){
+					place = move[1];
+					button = document.getElementById('space_'+place);
+					button.innerText = 'O';
+				} else {
+					response_text = document.getElementById('response_text');
+					response_text.innerText = move[0];
+				}
+
+			}
+
 		}
 
 	</script>
@@ -85,7 +105,9 @@
 			_</button>
 		</div>
 		<br />
+		<div id="response_text">
 		You make the first move as player X, the API will respond
+		</div>
 	</div>
 
 	</body>
