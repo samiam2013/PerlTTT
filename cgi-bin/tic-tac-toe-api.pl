@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use diagnostics;
+#use diagnostics;
 use Data::Dumper qw(Dumper);
 
 use CGI;
@@ -19,13 +19,13 @@ my $json_board = $cgi->param("POSTDATA");
 #  ('_','_','_','_','_','_','_','_','_');
 
 my $json = JSON->new->allow_nonref;
-my $board = $json->decode($json_board);
+my $input_board = $json->decode($json_board);
 
 #this line proves that it's getting input
 #print Dumper \$board;
 
 sub check_win {
-  my @board = @_;
+  my $board = shift(@_);
   my @win_states = (
     [0,1,2],
     [0,3,6],
@@ -41,16 +41,17 @@ sub check_win {
       my $first = $_->[0];
       my $second = $_->[1];
       my $third = $_->[2];
-      my $first_val = $board[$first];
-      my $second_val = $board[$second];
-      my $third_val = $board[$third];
+      my $first_val = $board->[$first];
+      #print "first_val: ".$first_val."\n";
+      my $second_val = $board->[$second];
+      #print "second_val: ".$second_val."\n";
+      my $third_val = $board->[$third];
+      #print "third_val: ".$third_val."\n";
       if ($first_val eq $second_val and $first_val eq $third_val){
         if ($first_val eq 'X') {
           return -10;
-        } else if ($first_val eq 'O'){
+        } elsif ($first_val eq 'O'){
           return 10;
-        } else {
-          return 0;
         }
       }
     }
@@ -58,7 +59,7 @@ sub check_win {
 }
 
 sub move_left {
-  my @board = @_;
+  my $board = shift(@_);
   my @possible = (0..8);
   for(@possible){
     if($board->[$_] eq '_'){
@@ -68,25 +69,21 @@ sub move_left {
   return 0;
 }
 
-sub find_best_move {
-  my @board = @_;
-  my $best_move = -1;
-  my @possible = (0..8);
-  for(@possible){
-    if($board->[$_] eq '_'){
-      print $_." -> move open\n";
-
-    }
-  }
-}
-print "I'm running!\n";
-print "move_left():".move_left($board);
-if (move_left($board)) {
-  my $score = check_win($board);
-  if ($score == 0){ #no winner yet
-    print "no winner yet"
-    find_best_move($board);
-  } else if ($score == -10){
-    print "winner: X";
+#print "move_left():".move_left($input_board)."\n";
+my $score = check_win($input_board);
+if ($score == -10){ #no winner yet
+  #print "winner: X";
+  # send game over signal?
+} elsif ($score == 10){
+  #print "winner: O";
+  # send game over signal?
+} elsif ($score == 0){
+  #print "no winner yet";
+  if (move_left($input_board)) {
+    # find next move
+    print "computing next move! ......\n";
+  } else {
+    #print "draw"
+    # send game over signal?
   }
 }
