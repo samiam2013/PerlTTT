@@ -67,13 +67,30 @@
 					place = move[1];
 					button = document.getElementById('space_'+place);
 					button.innerText = 'O';
+				} else if (moveType == 'winner O'){
+					place = move[1];
+					button = document.getElementById('space_'+place);
+					button.innerText = 'O';
+					response_text = document.getElementById('response_text');
+					response_text.innerText = move[0];
+					replace_underlines();
 				} else {
 					response_text = document.getElementById('response_text');
 					response_text.innerText = move[0];
+					replace_underlines();
 				}
 
 			}
 
+		}
+
+		function replace_underlines(){
+			for (i = 0; i < 9; i++) {
+				move = document.getElementById("space_"+i);
+				if (move.innerText == "_"){
+					move.innerText = "-";
+				}
+			}
 		}
 
 	</script>

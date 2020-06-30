@@ -145,7 +145,6 @@ sub minimax{
     return $best_val;
   }
 
-
 }
 
 
@@ -166,6 +165,10 @@ if ($score == -10){ #no winner yet
     my $next_move = find_best_move($input_board);
     $response[0] = "continue";
     $response[1] = $next_move;
+    $input_board->[$next_move] = 'O';
+    if (check_win($input_board) == 10) {
+      $response[0] = "winner O";
+    }
   } else {
     #print "draw"
     $response[0] = "draw";
