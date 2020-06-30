@@ -3,6 +3,7 @@
 	<title>Tic Tac Toe</title>
 </head>
 	<body>
+
 	<style>
 		#page_title{
 			text-align: center;
@@ -22,14 +23,41 @@
 			padding-top: 5px;
 		}
 	</style>
+
 	<script>
 		//this will have to be the code for letting the agent move
 		function boardMove(space_number){
 			var space_id = "space_"+space_number;
 			var button = document.getElementById(space_id);
 			button.innerText = 'X';
+			requestBuild();
 		}
+
+		function requestBuild(){
+			// send request to perl api for response move
+			var moves = new Array();
+			for (i = 0; i < 9; i++) {
+				move = document.getElementById("space_"+i).innerText;
+				moves.push(move);
+			}
+			getResponse(moves)
+		}
+
+		function getResponse(moves){
+			//console.log("moves:"+moves);
+			var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+			xmlhttp.open("POST", "/cgi-bin/tic-tac-toe-api.pl");
+			xmlhttp.onreadystatechange = function() {
+	        if (xmlhttp.status==200) {
+						console.log(xmlhttp.responseText);
+					}
+	    };
+			xmlhttp.setRequestHeader("Content-Type", "application/json");
+			xmlhttp.send(JSON.stringify(moves));
+		}
+
 	</script>
+
 	<h3 id="page_title">Tic Tac Toe</h3>
 	<div id="board">
 		<div class="board_row">
